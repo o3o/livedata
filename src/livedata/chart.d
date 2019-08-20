@@ -85,7 +85,7 @@ final class ChartController {
    }
 
    @path("chart_set_ws") void getChartSet(scope WebSocket socket) {
-      trace("Chart2 - connect", );
+      trace("Chart set - connect", );
 
       while (true) {
          try {
@@ -96,7 +96,7 @@ final class ChartController {
             Json j = parseJsonString(message);
 
             if (j["action"].get!string == "rqs") {
-               tracef("setData %s", timerSet.peek.total!"msecs");
+               tracef("set data in  %s", timerSet.peek.total!"msecs");
                timerSet.reset;
                string data = chartModel.getData(0, BLK);
                socket.send(data);
