@@ -1,0 +1,14 @@
+doctype html
+html(lang='en')
+   head
+      meta(charset='utf-8')
+      meta(name='viewport', content='width=device-width, initial-scale=1')
+
+      script(src='/js/jquery.min.js')
+      script(src='/js/highcharts.js')
+      script(src='/js/exporting.js')
+      script(src='/js/chart.js')
+
+   body#root
+      block content
+

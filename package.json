@@ -1,0 +1,23 @@
+{
+  "name": "bit22",
+  "version": "1.0.0",
+  "description": "Webapp per gestione acquisitori Miroline",
+  "main": "index.js",
+  "scripts": {
+    "lint": "echo '=> linting' && jshint js/*.js",
+    "semi": "semistandard --fix js/*.js",
+    "minify:js": "echo '=> minify:js' && uglifyjs -o public/js/chart.js js/chart.js",
+    "build": "echo '=> building' &&  npm run minify:js -s && npm run minify:css -s"
+  },
+  "author": "Orfeo Da Via'",
+  "license": "Microline",
+  "dependencies": {
+    "highcharts": "^7.1.2",
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.10.2",
+    "semistandard": "^13.0.1",
+    "uglify-js": "^3.6.0"
+  }
+}
