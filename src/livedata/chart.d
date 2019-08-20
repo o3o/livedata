@@ -9,21 +9,22 @@ import std.datetime.stopwatch : StopWatch, AutoStart;
 enum BLK = 50_000;
 final class ChartController {
    private ChartModel chartModel;
-   private StopWatch timerAdd;
    private StopWatch timerSet;
+   private StopWatch timerAdd;
 
    this(ChartModel chartModel) {
       assert(chartModel !is null);
       this.chartModel = chartModel;
-      timerAdd.start;
       timerSet.start;
+      timerAdd.start;
    }
 
-   @path("chart") void getChart() {
-      render!("chart.dt");
+   @path("add") void getChartAdd() {
+      render!("chart_add.dt");
    }
-   @path("chart2") void getChart2() {
-      render!("chart2.dt");
+
+   @path("set") void getChartSet() {
+      render!("chart_set.dt");
    }
 
    /**
@@ -51,9 +52,9 @@ final class ChartController {
     *  socket = Socket collegato
     *  _id = Id del grafico: e' l'id della tabella chart (1, 2 etc)
     */
-   @path("chart_ws") void getPullDataIntoSocket(scope WebSocket socket) {
-      trace("Chart - connect", );
-      timerSet.reset;
+   @path("chart_add_ws") void getChartAdd(scope WebSocket socket) {
+      trace("Chart add - connect", );
+      timerAdd.reset;
 
       while (true) {
          try {
@@ -67,8 +68,8 @@ final class ChartController {
                int last = j["last"].get!int;
                int len = j["len"].get!int;
                if (last <= BLK) {
-                  tracef("setData %sms last %s",  timerSet.peek.total!"msecs", last);
-                  timerSet.reset;
+                  tracef("add %s data in %sms (last %s)",  len, timerAdd.peek.total!"msecs", last);
+                  timerAdd.reset;
                   string data = chartModel.getData(last, len);
                   socket.send(data);
                }
@@ -77,12 +78,13 @@ final class ChartController {
                break;
             }
          } catch (Exception e) {
-            errorf("Chart FD - %s", e.msg);
+            errorf("Chart add - %s", e.msg);
          }
       }
-      trace("Chart FD - disconnect");
+      trace("Chart add - disconnect");
    }
-   @path("chart_ws2") void getPullDataIntoSocket2(scope WebSocket socket) {
+
+   @path("chart_set_ws") void getChartSet(scope WebSocket socket) {
       trace("Chart2 - connect", );
 
       while (true) {

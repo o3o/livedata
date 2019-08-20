@@ -72,8 +72,8 @@ function renderChart () {
    });
 }
 
-function connectChart () {
-   let wsUri = getBaseURL() + '/chart_ws';
+function connectChartAdd () {
+   let wsUri = getBaseURL() + '/chart_add_ws';
    console.log('uri: ' + wsUri);
 
    let sock = new WebSocket(wsUri);
@@ -93,8 +93,9 @@ function connectChart () {
       sock.send(JSON.stringify({action: 'close'}));
    };
 }
-function connectChart2 () {
-   let wsUri = getBaseURL() + '/chart_ws2';
+
+function connectChartSet () {
+   let wsUri = getBaseURL() + '/chart_set_ws';
    console.log('uri: ' + wsUri);
 
    let sock = new WebSocket(wsUri);
@@ -151,6 +152,7 @@ function addSeries (res) {
       console.log('setSeries: series is null');
    }
 }
+
 function setSeries (res) {
    let c = MYAPP.chart;
   if (c && res !== null) {
