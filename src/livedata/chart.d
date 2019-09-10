@@ -5,6 +5,7 @@ import vibe.data.json : Json, parseJsonString;
 import vibe.http.websockets : WebSocket;
 import vibe.web.web;
 import std.datetime.stopwatch : StopWatch, AutoStart;
+import tinyredis : Redis;
 
 enum BLK = 50_000;
 final class ChartController {
@@ -98,7 +99,7 @@ final class ChartController {
             if (j["action"].get!string == "rqs") {
                tracef("set data in  %s", timerSet.peek.total!"msecs");
                timerSet.reset;
-               string data = chartModel.getData(0, BLK);
+               string data = chartModel.getData(0, chartModel.getBlk);
                socket.send(data);
             } else if (message == "close") {
                trace("Chart FD - close");
@@ -113,6 +114,11 @@ final class ChartController {
 }
 
 class ChartModel {
+   private Redis redis;
+   this(Redis redis) {
+      assert(redis !is null);
+      this.redis = redis;
+   }
    private string getData(int last, int len) {
       import std.random;
       auto rnd = Random(unpredictableSeed);
@@ -131,5 +137,9 @@ class ChartModel {
       }
       return table.toString();
    }
-}
 
+   int getBlk() {
+      import tinyredis_util.util : get;
+      return redis.get!int("blk");
+   }
+}

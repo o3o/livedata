@@ -12,6 +12,8 @@
 		"openssl": "1.1.6+1.0.1g",
 		"stdx-allocator": "2.77.5",
 		"taggedalgebraic": "0.11.4",
+		"tinyredis": "2.2.1",
+		"tinyredis_util": "0.2.0",
 		"vibe-core": "1.7.0-beta.2",
 		"vibe-d": "0.8.6-beta.1"
 	}

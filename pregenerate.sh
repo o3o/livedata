@@ -13,6 +13,8 @@ cp -up $HC/highcharts.js.map ./public/js
 cp -up $HC/modules/solid-gauge.js ./public/js
 cp -up $HC/modules/exporting.js ./public/js
 cp -up $HC/modules/exporting.js.map ./public/js
+cp -up $HC/modules/boost.js ./public/js
+cp -up $HC/modules/boost.js.map ./public/js
 
 # jQuery
 JQ=./node_modules/jquery

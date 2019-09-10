@@ -10,10 +10,12 @@ shared static this() {
    import std.conv : to;
    import std.format : format;
    import livedata.chart;
+   import tinyredis : Redis;
 
+   auto redis = new Redis("localhost", 6379);
 
    auto router = new URLRouter;
-   auto indexM = new ChartModel();
+   auto indexM = new ChartModel(redis);
    router.registerWebInterface(new ChartController(indexM));
    router.get("*", serveStaticFiles("./public/",));
 

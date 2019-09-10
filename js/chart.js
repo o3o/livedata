@@ -48,6 +48,16 @@ function renderChart () {
          text: 'Live Data (CSV)'
       },
 
+      boost: {
+        useGPUTranslations: true
+    },
+ plotOptions: {
+        series: {
+            enableMouseTracking: false
+        }
+    },
+
+
       subtitle: {
          text: 'Data input from a remote CSV file'
       },
@@ -102,8 +112,12 @@ function connectChartSet () {
 
    sock.onmessage = function (msg) {
       var msgJson = JSON.parse(msg.data);
-      MYAPP.last += msgJson[0].length;
-      setSeries(msgJson);
+      let len = msgJson[0].length;
+      if (len > MYAPP.last) {
+         MYAPP.last = len;
+         console.log(len);
+         setSeries(msgJson);
+      }
    };
 
    sock.onopen = function () {

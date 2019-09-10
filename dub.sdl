@@ -3,16 +3,14 @@ description "Esempio di grafici"
 authors "Orfeo Da Vià"
 copyright "Copyright © 2019, Microline s.r.l."
 license "Microline"
-
-dependency "vibe-d:data" version="~>0.8.6-beta.1"
-dependency "vibe-d:web" version="~>0.8.6-beta.1"
-
-
+dependency "vibe-d:data" version=">=0.8.6-beta.1 <0.9.0-0"
+dependency "tinyredis" version="~>2.2.1"
+dependency "tinyredis_util" version="~>0.2.0"
+dependency "vibe-d:web" version=">=0.8.6-beta.1 <0.9.0-0"
 configuration "application" {
-   stringImportPaths "views"
-   targetType "executable"
-   mainSourceFile "src/app.d"
-   versions "VibeDefaultMain"
-   versions "VibeUseOpenSSL11"
-   preGenerateCommands "./pregenerate.sh"
+	targetType "executable"
+	mainSourceFile "src/app.d"
+	versions "VibeDefaultMain" "VibeUseOpenSSL11"
+	stringImportPaths "views"
+	preGenerateCommands "./pregenerate.sh"
 }
